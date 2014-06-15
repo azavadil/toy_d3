@@ -1,3 +1,23 @@
+body {
+  background-image: url("bg.gif");
+  background-size: cover;
+}
+
+.mainSim {
+  width:500;
+  height: 500;
+}
+
+.container {
+  margin: 0 auto 0 auto;
+  width: 500px;
+  height: 500px;
+  border: 1px solid white;
+  padding: 0;
+  border: 1px;
+  background-color: white;
+}
+
 text {
   font: bold 48px monospace;
 }
@@ -9,3 +29,4 @@ text {
 .update {
   fill: #333;
 }
+

@@ -1,82 +1,56 @@
-// How to learn a library
+var Particle = function(options){
 
-// .update() is the default for any selection
-// 
+  this.vx = options.vx;
+  this.vy = options.vy;
+  this.worldWidth = options.width;
+  this.worldHeight = options.width;
+  this.radius = options.radius;
+  this.minX = options.radius;
+  this.maxX = options.width - options.radius;
+  this.minY = options.radius;
+  this.maxY = options.height - options.radius;
 
-var gameOptions = { 
-  width: 500, 
-  height: 500
-} 
+  var startX = options.x >= this.minX ? options.x : this.minX;
+  startX = startX <= this.maxX ? startX : this.maxX;
+  var startY = options.y >= this.minY ? options.y : this.minY;
+  startY = startY <= this.maxY ? startY : this.maxY;
 
-var svg = d3.select("body").append("svg")
-  .attr("width", gameOptions.width)
-  .attr("height", gameOptions.height)
-  .append('g'); 
-
-var axes = {
-  x: d3.scale.linear().domain([0,100]).range([0,gameOptions.width]),
-  y: d3.scale.linear().domain([0,100]).range([0,gameOptions.height]),
-};  
-  
-
-var update = function(particleData){
-
-  var particles = svg.selectAll("circle.particle").data(particleData); 
-  
-  
-  // the general update pattern is 
-  // particles.enter().append() 
-  // this appends all of the nodes that are 
-  // not attached to the dom
-  particles.enter()
-    .append("svg:circle")
-    .attr("class", "particle")
-    .attr("r", 10)
-    .attr("cx", function(d) { return d.x; })
-    .attr("cy", function(d) { return d.y; })
-    .attr("fill", "black"); 
-    
-
-  // why do we update the cx,cy twice? 
-  // lines 23 & 24 only get called the 
-  // first time
-  // in addition, the lines a & b are part 
-  // of the transition. they need to transition 
-  // from one place to another
-   // we might want to use 
-  // return axes.x(enemy.x) to translate the coordinate
-  // system
-
-  particles
-    .transition()
-    .duration(1000)
-    .style("opacity", 1)
-    .attr("cx", function(d){ return d.x;})  // line a
-    .attr("cy", function(d){ return d.y;})  // line b
-    
-    
-   particles.exit()
-     .remove(); 
-     
-      
+  this.x = startX;
+  this.y = startY;
 };
 
-var randomParticles = function(enemyCount){ 
-  var particleCount = particleCount || 20; 
-  var particleData = []; 
-  for( var i = 0; i < particleCount; i++ ){ 
-    particleData.push({
-      x: Math.random() * gameOptions.width, 
-      y: Math.random() * gameOptions.height
-    }); 
-  }; 
-  return particleData; 
-} 
+Particle.prototype.getX = function(){
+  return this.x;
+};
 
-// initial display
-update(randomParticles()); 
+Particle.prototype.setX = function(x){
+  x = x >= this.minX ? x : this.minX;
+  x = x <= this.maxX ? x : this.maxX;
+  this.x = x;
+};
 
-setInterval( function(){ 
-  update(randomParticles());}, 1000); 
-  
-  
+Particle.prototype.getY = function(){
+  return this.y;
+};
+
+Particle.prototype.setY = function(y){
+  y = y >= this.minY ? y : this.minY;
+  y = y <= this.maxY ? y : this.maxY;
+  this.y = y;
+};
+
+Particle.prototype.getVx = function(){
+  return this.vx;
+};
+
+Particle.prototype.setVx = function(vx){
+  this.vx = vx;
+};
+
+Particle.prototype.getVy = function(){
+  return this.vy;
+};
+
+Particle.prototype.setVy = function(vy){
+  this.vy = vy;
+};
